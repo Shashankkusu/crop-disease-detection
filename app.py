@@ -1,4 +1,5 @@
 import os
+import yaml
 import uuid
 import datetime
 import numpy as np
@@ -6,20 +7,22 @@ from PIL import Image
 from flask import Flask, request, jsonify, render_template
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 from tensorflow.keras.models import load_model
-from dotenv import load_dotenv
 import google.generativeai as genai
 
 # Load environment variables
-load_dotenv()
+with open("config.yaml", "r") as f:
+    config = yaml.safe_load(f)
+
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", "your_secret_key")
-app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY", "jwt_secret_key")
+app.config['SECRET_KEY'] = config.get("secret_key", "your_secret_key")
+app.config['JWT_SECRET_KEY'] = config.get("jwt_secret_key", "jwt_secret_key")
+
+
 
 jwt = JWTManager(app)
 
-genai.configure(api_key="AIzaSyBfYBTLY9P0ubbiOMIqhtctYYd1kawWlXY")
-
+GEMINI_API_KEY = config.get("gemini_api_key")
 # Farmer-specific system prompt
 SYSTEM_PROMPT = """You are a helpful assistant for farmers. Your role is to provide accurate and easy-to-understand information related to crop care, disease prevention, weather tips, fertilizer use, irrigation, and best agricultural practices. If a user asks a non-farming related question, politely tell them that you are only trained to assist with agricultural queries."""
 
