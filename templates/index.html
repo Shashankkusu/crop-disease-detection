@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer's Assistant | Plant Disease Detection</title>
+    <!-- Add this before </head> -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>Farmer's Assistant</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#detection">Disease Detection</a></li>
+                    <li><a href="#chatbot">AI Assistant</a></li>
+                    <li><a href="#tribute">Our Farmers</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button id="loginBtn" class="btn btn-outline">Login</button>
+                <button id="registerBtn" class="btn btn-primary">Register</button>
+            </div>
+        </div>
+    </header>
+
+ 
+
+    <main class="container">
+        <section id="detection">
+            <div class="section-title">
+                <h2>Plant Disease Detection</h2>
+            </div>
+            <div class="detection-container">
+                <div class="upload-box">
+                    <h3>Upload Plant Image</h3>
+                    <div class="form-group">
+                        <label for="plantType">Select Plant Type</label>
+                        <select id="plantType" class="form-control">
+                            <option value="pepper">Pepper</option>
+                            <option value="potato">Potato</option>
+                            <option value="tomato">Tomato</option>
+                        </select>
+                    </div>
+                    <div id="fileUpload" class="file-upload">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag & Drop your image here</p>
+                        <small>or click to browse files</small>
+                        <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                    </div>
+                    <img id="imagePreview" alt="Preview">
+                    <button id="analyzeBtn" class="btn btn-primary" disabled>Analyze Image</button>
+                </div>
+                <div class="result-box" id="resultBox">
+                    <h3>Detection Results</h3>
+                    <div class="result-content" id="resultContent">
+                        <div class="disease-info">
+                            <h4 id="diseaseName">No disease detected</h4>
+                            <p id="plantTypeText">Plant: -</p>
+                        </div>
+                        <p>Confidence Level:</p>
+                        <div class="confidence-meter">
+                            <div class="confidence-level" id="confidenceLevel"></div>
+                        </div>
+                        <p id="confidenceText">0%</p>
+                        <div id="treatmentInfo"></div>
+                    </div>
+                    <button id="newAnalysisBtn" class="btn btn-outline">New Analysis</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="chatbot">
+            <div class="section-title">
+                <h2>AI Farming Assistant</h2>
+            </div>
+            <div class="chatbot-container">
+                <div class="chatbot-box">
+                    <div class="chat-header">
+                        <h3><i class="fas fa-robot"></i> Farming Assistant</h3>
+                    </div>
+                    <div class="chat-messages" id="chatMessages">
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="userInput" placeholder="Ask me anything about farming...">
+                        <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <section class="hero">
+        <div class="hero-content">
+            <div class="farmer-animation">
+                <svg id="farmer-svg" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Sky Background -->
+                    <rect width="800" height="400" fill="#87CEEB"/>
+                    
+                    <!-- Sun -->
+                    <circle id="sun" cx="700" cy="100" r="50" fill="#FFD700" class="animate-pulse"/>
+                    
+                    <!-- Fields with proper ground -->
+                    <rect x="0" y="300" width="800" height="100" fill="#5D4037"/> <!-- Dark soil -->
+                    <rect x="0" y="250" width="800" height="50" fill="#4CAF50"/> <!-- Grass layer -->
+                    
+                    <!-- Farmer Character -->
+                    <g id="farmer" transform="translate(100,220)">
+                        <!-- Head -->
+                        <circle cx="30" cy="30" r="25" fill="#FFD3B6" stroke="#000" stroke-width="2"/>
+                        <!-- Face -->
+                        <circle cx="20" cy="25" r="3" fill="#212121"/>
+                        <circle cx="40" cy="25" r="3" fill="#212121"/>
+                        <path d="M20,40 Q30,45 40,40" stroke="#212121" stroke-width="2" fill="none"/>
+                        <!-- Body -->
+                        <rect x="15" y="55" width="30" height="40" fill="#5D4037" stroke="#000" stroke-width="2"/>
+                        <!-- Arms -->
+                        <rect x="0" y="60" width="15" height="25" fill="#5D4037" stroke="#000" stroke-width="2"/>
+                        <rect x="45" y="60" width="15" height="25" fill="#5D4037" stroke="#000" stroke-width="2"/>
+                        <!-- Legs -->
+                        <path d="M15,95 L15,125 L5,125" stroke="#3E2723" stroke-width="12" stroke-linecap="round"/>
+                        <path d="M33,95 L33,125 L43,125" stroke="#3E2723" stroke-width="12" stroke-linecap="round"/>
+                        <!-- Hat -->
+                        <path d="M15,15 Q30,0 45,15 L35,25 L25,25 Z" fill="#795548" stroke="#000" stroke-width="2"/>
+                        <!-- Tool -->
+                        <path d="M50,70 L80,40" stroke="#795548" stroke-width="5" stroke-linecap="round"/>
+                    </g>
+                    
+                    <!-- Properly Grounded Tractor -->
+                    <g id="tractor" transform="translate(500,280)">
+                        <!-- Main body -->
+                        <rect x="0" y="0" width="80" height="30" fill="#E53935" stroke="#000" stroke-width="2"/>
+                        <!-- Cabin -->
+                        <rect x="50" y="-20" width="30" height="20" fill="#B71C1C" stroke="#000" stroke-width="2"/>
+                        <!-- Wheels -->
+                        <circle cx="20" cy="30" r="15" fill="#212121" stroke="#000" stroke-width="2"/>
+                        <circle cx="60" cy="30" r="15" fill="#212121" stroke="#000" stroke-width="2"/>
+                        <!-- Wheel details -->
+                        <circle cx="20" cy="30" r="10" fill="#424242" stroke="#000" stroke-width="1"/>
+                        <circle cx="60" cy="30" r="10" fill="#424242" stroke="#000" stroke-width="1"/>
+                        <!-- Exhaust pipe with smoke -->
+                        <rect x="70" y="-15" width="5" height="15" fill="#616161" stroke="#000" stroke-width="1"/>
+                        <!-- Smoke puffs -->
+                        <circle cx="72" cy="-30" r="8" fill="rgba(255,255,255,0.7)" class="smoke"/>
+                        <circle cx="80" cy="-50" r="12" fill="rgba(255,255,255,0.5)" class="smoke"/>
+                        <circle cx="65" cy="-70" r="15" fill="rgba(255,255,255,0.3)" class="smoke"/>
+                    </g>
+                    
+                    <!-- Healthy Plants (replaced the weird shapes) -->
+                    <g id="plants">
+                        <!-- Tomato Plant -->
+                        <g transform="translate(200,250)">
+                            <path d="M0,50 L0,0" stroke="#2E7D32" stroke-width="3"/>
+                            <circle cx="0" cy="10" r="10" fill="#FF5722"/> <!-- Tomato -->
+                            <path d="M0,25 Q10,20 0,15" stroke="#2E7D32" stroke-width="2" fill="none"/> <!-- Leaf -->
+                        </g>
+                        
+                        <!-- Corn Plant -->
+                        <g transform="translate(300,250)">
+                            <path d="M0,50 L0,0" stroke="#2E7D32" stroke-width="3"/>
+                            <rect x="-8" y="5" width="16" height="20" fill="#FFEB3B" stroke="#000" stroke-width="1"/> <!-- Corn -->
+                        </g>
+                    </g>
+                </svg>
+            </div>
+            <h1 class="animate__animated animate__fadeIn">Protect Your Crops with AI</h1>
+            <p class="animate__animated animate__fadeIn animate__delay-1s">Upload images of your plants to detect diseases and get instant recommendations for treatment</p>
+            <button id="getStartedBtn" class="btn btn-primary btn-lg animate__animated animate__fadeIn animate__delay-2s">Get Started</button>
+        </div>
+    </section>
+    
+    <style>
+        /* Smoke animation */
+        .smoke {
+            animation: smokeRise 4s ease-out infinite;
+            opacity: 0;
+        }
+        
+        @keyframes smokeRise {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        /* Stagger smoke animations */
+        .smoke:nth-child(1) { animation-delay: 0s; }
+        .smoke:nth-child(2) { animation-delay: 1s; }
+        .smoke:nth-child(3) { animation-delay: 2s; }
+        
+        /* Tractor animation */
+        #tractor {
+            animation: tractorMove 20s linear infinite;
+        }
+        
+        @keyframes tractorMove {
+            0% { transform: translate(800px, 280px); }
+            100% { transform: translate(-100px, 280px); }
+        }
+    </style>
+    
+    <section class="tribute-section" id="tribute">
+        <div class="tribute-content">
+            <h2>Honoring Our Farmers</h2>
+            <p>"Farmers are the backbone of our society, working tirelessly to feed the world. Their dedication and hard work deserve our utmost respect and gratitude."</p>
+            <div class="farmer-stats">
+                <div class="stat-item">
+                    <h3>1.5 Billion</h3>
+                    <p>Farmers worldwide</p>
+                </div>
+                <div class="stat-item">
+                    <h3>80%</h3>
+                    <p>Of food comes from family farms</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>Dedication to feeding nations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2023 Farmer's Assistant. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="static/js/script.js"></script>
+</body>
+</html>
